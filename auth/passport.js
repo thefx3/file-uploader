@@ -20,7 +20,7 @@ const LocalFunction = async (email, password, done) => {
       };
   
       // 2. Validate password using bcrypt
-      const isValid = validPassword(password, user.password)
+      const isValid = await validPassword(password, user.password)
   
       if (!isValid) {
         return done(null, false, { message: "Incorrect password." });

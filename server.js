@@ -16,7 +16,6 @@ const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
 
 //Import of local modules
-const connection = require('./lib/db');
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
@@ -43,6 +42,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
     cookie: {
+      httpOnly: true,
+      sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000 // ms
     },
     secret: 'a santa at nasa',

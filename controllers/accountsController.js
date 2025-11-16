@@ -1,15 +1,15 @@
 const UserModel = require('../models/userModel');
 
-function ensureAuthenticated(req, res) {
-    if (!req.isAuthenticated || !req.isAuthenticated()) {
+function ensureAuthenticated(req, res, next) {
+    if (!req.isAuthenticated()) {
         res.redirect('/login');
-        return false;
+        next();
     }
     return true;
 }
 
 function isAdmin (req, res) {
-    if (!req.isAuthenticated || !req.isAuthenticated() || req.user.role !== 'ADMIN') {
+    if (!req.isAuthenticated() || req.user.role !== 'ADMIN') {
         res.status(403).send('Access denied. You dont have the authorized access.');
         return false;
     }
@@ -17,7 +17,7 @@ function isAdmin (req, res) {
 }
 
 function isUser (req, res) {
-    if (!req.isAuthenticated || !req.isAuthenticated() || req.user.role !== 'USER') {
+    if (!req.isAuthenticated() || req.user.role !== 'USER') {
         res.status(403).send('Access denied. You dont have the authorized access.');
         return false;
     }
