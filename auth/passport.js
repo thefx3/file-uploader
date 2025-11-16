@@ -1,54 +1,51 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 const { validPassword } = require('../lib/passwordUtils');
-const { Prisma } = require('@prisma/client');
 
-// -------- Local Strategy Function set up ---------------
+// -------- Local Strategy Function ---------------
 
 const LocalFunction = async (email, password, done) => {
     try {
       const normalizedEmail = email?.trim();
 
-      if (!normalizedEmail) {
-        return done(null, false, { message: 'Email is required.' });
-      }
-
-      const result = await prisma.user.findUnique({
+      // 1. Get user from Prisma
+      const user = await prisma.user.findUnique({
         where: {
           email: { normalizedEmail }
         }
       })
-      const user = result.rows[0];
   
       if (!user) {
         return done(null, false, { message: 'User not found.' })
       };
   
+      // 2. Validate password using bcrypt
       const isValid = validPassword(password, user.password)
   
-      if (isValid) {
-        return done(null, user);
-      } else {
-        return done(null, false, { message: 'Incorrect password.' });
+      if (!isValid) {
+        return done(null, false, { message: "Incorrect password." });
       }
+
+      return done(null, user);
   
     } catch (err) {
       return done(err);
     }
 };
   
-const strategy = new LocalStrategy(
-  {
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: false,
-  },
-  LocalFunction,
+
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: false,
+    },
+    LocalFunction,
+  )
 );
-passport.use(strategy);
-
-
-
 
 // --------- Serialize user id when logged in ------------
 
