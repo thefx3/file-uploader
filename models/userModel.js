@@ -20,6 +20,7 @@ class UserModel {
               ...(data.username && { username: data.username }),
               ...(data.email && { email: data.email }),
               ...(data.password && { password: data.password }), // hash bcrypt
+              ...(data.role && { role: data.role }),
             },
           });
     }

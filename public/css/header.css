@@ -85,3 +85,35 @@
     background: #fcead9;
     color: #a14422;
 }
+
+.badges {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="submit"] {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #a144225d;
+        color: white;
+    }
+}

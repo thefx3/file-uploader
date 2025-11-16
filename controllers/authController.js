@@ -51,7 +51,7 @@ async function registerForm(req, res, next) {
           return res.status(409).send('This email is already used.');
         }
 
-        const { hashedPassword } = genPassword(password);
+        const hashedPassword = await genPassword(password);
 
         await UserModel.createUser({
           username: username.trim(),

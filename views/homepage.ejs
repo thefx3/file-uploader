@@ -10,8 +10,18 @@
 
     <% if (user) { %>
       <div class="welcome-banner">
-        <h2>👋 Welcome back, <%= user.id || user.username|| user.email %>!</h2>
+        
+        <h2>👋 Welcome back, <%= user.username|| user.email || user.id %>!</h2>
+        <% if (user.role === 'ADMIN') { %>
+          <p>You are an ADMIN and you can now upload files.</p>
+        <% } else if (user.role === 'USER') { %>
+          <p>You are a USER and you can see all the uploaded files.</p>
+        <% } else { %>
+          <p>You are a GUEST. You can't see anything. Log in to continue...</p>
+        <% } %>
+
       </div>
+      
     <% } else { %>
       <div class="not-logged-in">
         👋 Hello visitor! You are not logged in !

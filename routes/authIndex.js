@@ -3,6 +3,7 @@ const router = Router();
 const passport = require('passport');
 
 const authController = require("../controllers/authController");
+const accountsController = require("../controllers/accountsController");
 
 // ----------- GET ROUTES --------------
 router.get('/', authController.homePage);
@@ -23,6 +24,8 @@ router.post(
     })
 );
 router.post('/register', authController.registerForm);
+router.post('/update-role', accountsController.updateRole);
+
 
 
 module.exports = router;
