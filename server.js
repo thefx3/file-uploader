@@ -4,7 +4,15 @@ console.log("Environment loaded:", process.env.DB_HOST, process.env.DB_DATABASE)
 //Import of external modules
 const path = require("node:path");
 const express = require('express');
+
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
 const session = require('express-session');
+
+const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
+const { PrismaClient } = require('@prisma/client');
+
 const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
 
@@ -29,22 +37,26 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, 'public')));
 
 //-------------- SESSION SETUP ------------------------
+
+// Using PrismaSessionStore store sessions in a database via Prisma
 app.use(
-    session({
-      store: new pgSession({
-        pool: connection,
-        tableName: 'session',
-        createTableIfMissing: true,
-      }),
-      secret: process.env.SESSION_SECRET || 'secret',
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24,
-        secure: false,
-      },
-    })
-  );
+  expressSession({
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000 // ms
+    },
+    secret: 'a santa at nasa',
+    resave: true,
+    saveUninitialized: true,
+    store: new PrismaSessionStore(
+      new PrismaClient(),
+      {
+        checkPeriod: 2 * 60 * 1000,  //ms
+        dbRecordIdIsSessionId: true,
+        dbRecordIdFunction: undefined,
+      }
+    )
+  })
+);
 
 //-------------- PASSPORT AUTHENTICATION ----------------
 app.use(passport.initialize());
