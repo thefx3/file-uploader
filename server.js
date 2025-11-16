@@ -5,8 +5,7 @@ console.log("Environment loaded:", process.env.DB_HOST, process.env.DB_DATABASE)
 const path = require("node:path");
 const express = require('express');
 
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+
 
 const session = require('express-session');
 
@@ -18,6 +17,8 @@ const passport = require('passport');
 
 //Import of local modules
 const connection = require('./lib/db');
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 const routes = require('./routes');
 
@@ -40,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Using PrismaSessionStore store sessions in a database via Prisma
 app.use(
-  expressSession({
+  session({
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000 // ms
     },
@@ -93,4 +94,3 @@ app.use((err, req, res, next) => {
   // We can now specify the `err.statusCode` that exists in our custom error class and if it does not exist it's probably an internal server error
   res.status(err.statusCode || 500).send(err.message);
 });
-

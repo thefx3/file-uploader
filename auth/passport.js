@@ -2,7 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const { validPassword } = require('../lib/passwordUtils');
+const { validPassword } = require('../auth/passwordUtils');
 
 // -------- Local Strategy Function ---------------
 

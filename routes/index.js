@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
-const upload = multer({ dest: 'uploads/' })
 const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 const authIndex = require('../routes/authIndex');
 

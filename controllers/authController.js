@@ -1,55 +1,16 @@
-const queries = require('../lib/queries');
 const { genPassword } = require('../auth/passwordUtils');
 const UserModel = require('../models/userModel');
+const { Prisma } = require('@prisma/client');
 
 // -------------- CONTROLLERS ----------------
 
 async function homePage(req, res) {
     try {
-      const rawPosts = await queries.getAllPosts();
-      const isLoggedIn = Boolean(req.user);
-  
-      const formatDate = (value) =>
-        value
-          ? new Date(value).toLocaleDateString("fr-FR", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })
-          : "Unknown date";
+      const { loginError } = req.query;
+      res.render("homepage", { loginError, user: req.user });
 
-      const posts = rawPosts.map((p) => {
-        if (isLoggedIn) {
-          return {
-            idpost: p.idpost,
-            iduser: p.iduser,
-            email: p.email,
-            title: p.title || "Untitled",
-            content: p.content || "No content available.",
-            author: p.author || "Anonymous",
-            date: formatDate(p.created_at),
-          };
-        } else {
-          return {
-            idpost: p.idpost,
-            iduser: null,
-            email: null,
-            title: "Unavailable Title",
-            content: p.content,
-            author: "Member of the community",
-            date: "Unavailable date",
-          };
-        }
-      });
-  
-      res.render("homepage", {
-        posts,
-        user: req.user || null,
-        isLoggedIn,
-        loginError: req.query?.loginError || null,
-      });
     } catch (error) {
-      console.error("Error fetching posts:", error);
+      console.error("Error chargin homepage:", error);
       res.status(500).send("Internal Server Error");
     }
 }
@@ -76,22 +37,23 @@ async function registerPage(req, res) {
 
 async function registerForm(req, res, next) {
     try {
-        const { firstname, lastname, email, password  } = req.body;
+        const { username, email, password  } = req.body;
 
-        if (!firstname || !lastname || !email || !password) {
+        if (!username|| !email || !password) {
             return res.status(400).send('All the fields are required');
         }
 
+        //Check if the email is not already used
         const normalizedEmail = email.trim().toLowerCase();
-        const existingUser = await queries.findUserByEmail(normalizedEmail);
+        const existingUser = await UserModel.getUserByEmail(normalizedEmail);
 
         if (existingUser) {
-            return res.status(409).send('This email is already used.');
+          return res.status(409).send('This email is already used.');
         }
 
-        const { salt, hash } = genPassword(password);
+        const { hashedPassword } = genPassword(password);
 
-        await queries.addNewUser(firstname, lastname, normalizedEmail, hash, salt);
+        await UserModel.createUser(username, email, hashedPassword);
 
         return res.redirect('/login');
 

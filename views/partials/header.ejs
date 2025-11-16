@@ -1,0 +1,30 @@
+<header class="main-header">
+    <div class="badges">
+      <div class="logo">🌐</div>
+      <% if (user && user.is_admin) { %>
+        <div class="badge admin">Admin</div>
+      <% } %>
+      <% if (user && user.is_user) { %>
+        <div class="badge user">User</div>
+      <% } %>
+      <% if (user && user.is_guest) { %>
+        <div class="badge guest">Guest</div>
+      <% } %>
+    </div>
+
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/community">Community</a>
+
+      <% if (user) { %>
+        <a href="/profile" class="profile-link">
+          <%= (user.first_name || user.last_name || user.email || '?').trim().charAt(0).toUpperCase() %>
+        </a>
+        <a href="/logout" class="cta logout-link">Log out</a>
+      <% } else { %>
+        <a href="/login" class="cta login-link">Log in</a>
+        <a href="/register" class="cta signup-link">Sign up</a>
+      <% } %>
+    </nav>
+
+  </header>

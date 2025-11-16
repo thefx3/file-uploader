@@ -1,0 +1,26 @@
+
+<main class="login-container">
+  <div class="login-card">
+    <h1>Welcome back 👋</h1>
+    <p class="subtitle">Please log in to continue</p>
+
+    <% if (loginError) { %>
+      <p class="login-error">Email or password incorrect.</p>
+    <% } %>
+
+    <form action="/login" method="POST" class="login-form">
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Login</button>
+
+      <div class="register-link">
+        <p>Don’t have an account?</p>
+        <a href="/register">Create one</a>
+      </div>
+    </form>
+  </div>
+</main>
