@@ -19,18 +19,14 @@ model User {
   email       String    @unique
   password    String    //hashed with the generePasword function
   role        Role      @default(USER)
-  // For multiple sessions
-  // sessions    Session[] 
   createdAt   DateTime  @default(now())
 }
 
 model Session {
-  id          String   @id
-  // For multiple sessions
-  // user        User     @relation(fields: [userId], references: [id])
-  // userId      Int
-  data        Json
-  expires     DateTime
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
 }
 
 enum Role {

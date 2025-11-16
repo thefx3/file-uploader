@@ -1,13 +1,9 @@
 const { Router } = require("express");
 const router = Router();
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
 
-const authIndex = require('../routes/authIndex');
+const authIndex = require("./authIndex");
 
-// ----------- GET ROUTES --------------
-router.get('/', authIndex);
-// ----------- POST ROUTES -------------
-
+// Mount authentication routes at root
+router.use("/", authIndex);
 
 module.exports = router;

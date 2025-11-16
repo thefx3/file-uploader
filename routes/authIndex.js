@@ -5,12 +5,12 @@ const passport = require('passport');
 const authController = require("../controllers/authController");
 
 // ----------- GET ROUTES --------------
-router.get('/', authController.homePage); //Done in authController
-router.get('/login', authController.loginPage); //Done in authController
-router.get('/register', authController.registerPage); //Done in authController
-router.get('/logout', authController.logoutPage); //Done in authController
+router.get('/', authController.homePage);
+router.get('/login', authController.loginPage);
+router.get('/register', authController.registerPage);
+router.get('/logout', authController.logoutPage);
 
-router.get('/login-success', authController.loginSuccess); //Done in authController
+router.get('/login-success', authController.loginSuccess);
 router.get('/login-failure', authController.loginFailure);
 
 
@@ -22,7 +22,7 @@ router.post(
         failureRedirect: '/login?loginError=1'
     })
 );
-router.post('/register', authController.registerForm); //Done in authController
+router.post('/register', authController.registerForm);
 
 
 module.exports = router;

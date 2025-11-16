@@ -12,9 +12,7 @@ const LocalFunction = async (email, password, done) => {
 
       // 1. Get user from Prisma
       const user = await prisma.user.findUnique({
-        where: {
-          email: { normalizedEmail }
-        }
+        where: { email: normalizedEmail },
       })
   
       if (!user) {

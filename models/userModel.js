@@ -37,16 +37,6 @@ class UserModel {
       })
     }
 
-    // async getUserBy(data) {
-    //     return await prisma.user.findMany({
-    //         data: {
-    //           ...(data.username && { username: data.username }),
-    //           ...(data.email && { email: data.email }),
-    //           ...(data.id && { id: data.id }),
-    //         },
-    //       });
-    // }
-
     async getUserByEmail(email) {
       return await prisma.user.findUnique({
         where: { email: email },

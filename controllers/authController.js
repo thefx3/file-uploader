@@ -1,6 +1,6 @@
 const { genPassword } = require('../auth/passwordUtils');
 const UserModel = require('../models/userModel');
-const { Prisma } = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client');
 
 // -------------- CONTROLLERS ----------------
 
@@ -53,7 +53,11 @@ async function registerForm(req, res, next) {
 
         const { hashedPassword } = genPassword(password);
 
-        await UserModel.createUser(username, email, hashedPassword);
+        await UserModel.createUser({
+          username: username.trim(),
+          email: normalizedEmail,
+          password: hashedPassword,
+        });
 
         return res.redirect('/login');
 
