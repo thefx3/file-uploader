@@ -1,7 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const connection = require('../lib/db');
 const { validPassword } = require('../lib/passwordUtils');
+const { Prisma } = require('@prisma/client');
 
 // -------- Local Strategy Function set up ---------------
 
@@ -13,14 +13,18 @@ const LocalFunction = async (email, password, done) => {
         return done(null, false, { message: 'Email is required.' });
       }
 
-      const result = await connection.query('SELECT * FROM users WHERE email = $1', [normalizedEmail]);
+      const result = await prisma.user.findUnique({
+        where: {
+          email: { normalizedEmail }
+        }
+      })
       const user = result.rows[0];
   
       if (!user) {
         return done(null, false, { message: 'User not found.' })
       };
   
-      const isValid = validPassword(password, user.hash, user.salt);
+      const isValid = validPassword(password, user.password)
   
       if (isValid) {
         return done(null, user);

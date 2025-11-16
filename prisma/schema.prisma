@@ -19,6 +19,7 @@ model User {
   username    String    @unique
   email       String    @unique
   password    String    //hashed with the generePasword function
+  role        Role      @default(USER)
   // For multiple sessions
   // sessions    Session[] 
   createdAt   DateTime  @default(now())
@@ -31,4 +32,10 @@ model Session {
   // userId      Int
   data        Json
   expires     DateTime
+}
+
+enum Role {
+  ADMIN
+  USER
+  GUEST
 }

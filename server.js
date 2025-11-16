@@ -68,11 +68,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  res.locals.posts = req.posts || null;
-  next();
-})
-
 
 //-------------- ROUTES ---------------------------------
 app.use(routes);
