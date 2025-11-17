@@ -9,9 +9,9 @@ const accountsController = require("../controllers/accountsController");
 router.get('/', authController.homePage);
 router.get('/login', authController.loginPage);
 router.get('/register', authController.registerPage);
-router.get('/logout', authController.logoutPage);
+router.get('/logout', accountsController.ensureAuthenticated, authController.logoutPage);
 
-router.get('/login-success', authController.loginSuccess);
+router.get('/login-success', accountsController.ensureAuthenticated, authController.loginSuccess);
 router.get('/login-failure', authController.loginFailure);
 
 
@@ -24,7 +24,7 @@ router.post(
     })
 );
 router.post('/register', authController.registerForm);
-router.post('/update-role', accountsController.updateRole);
+router.post('/update-role', accountsController.ensureAuthenticated, accountsController.updateRole);
 
 
 

@@ -21,9 +21,6 @@ async function loginPage(req, res) {
 }
 
 function loginSuccess(req, res) {
-    if (!req.isAuthenticated || !req.isAuthenticated()) {
-        return res.redirect('/login');
-    }
     return res.redirect('/');
 }
 

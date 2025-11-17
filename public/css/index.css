@@ -138,3 +138,21 @@
   max-width: 800px;
   margin: 2rem auto;
 }
+
+.upload-page-btn {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  text-decoration: none;
+  color: #b45a2b;
+  border: 1px solid #c0392b;
+  width: 150px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  transition: all 0.3 ease;
+
+  &:hover {
+    transform: scale(0.98);
+  }
+}

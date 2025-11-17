@@ -1,20 +1,25 @@
 <header class="main-header">
-    <div class="badges">
+      <div class="badges">
       <div class="logo">🌐</div>
       <% if (user) { %>
       <div class="badge admin"><%= user.role %></div>
       <% } %>
-    </div>
-
-    <form action="/update-role" method="POST">
+      </div>
+      
+      <% if (user) { %>
+    <form action="/update-role" method="POST" class="role-form">
       <input type="radio" id="admin" name="role" value="ADMIN" <% if (user && user.role === 'ADMIN') { %>checked<% } %>>
       <label for="admin">ADMIN</label>
       <input type="radio" id="user" name="role" value="USER" <% if (user && user.role === 'USER') { %>checked<% } else if (!user) { %>checked<% } %>>
       <label for="user">USER</label>
       <input type="radio" id="guest" name="role" value="GUEST" <% if (user && user.role === 'GUEST') { %>checked<% } %>>
       <label for="guest">GUEST</label>
-      <input type="submit" value="Change">
+      <button type="submit">Change</button>
     </form>
+      <% } %>
+
+
+
 
     <nav class="nav-links">
       <a href="/">Home</a>

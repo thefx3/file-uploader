@@ -1,34 +1,33 @@
 const UserModel = require('../models/userModel');
 
 function ensureAuthenticated(req, res, next) {
-    if (!req.isAuthenticated()) {
-        res.redirect('/login');
-        next();
+    if (req.isAuthenticated && req.isAuthenticated()) {
+        return next();
     }
-    return true;
+    return res.redirect('/login');
 }
 
-function isAdmin (req, res) {
-    if (!req.isAuthenticated() || req.user.role !== 'ADMIN') {
-        res.status(403).send('Access denied. You dont have the authorized access.');
-        return false;
+function isAdmin (req, res, next) {
+    if (!req.isAuthenticated || !req.isAuthenticated()) {
+        return res.redirect('/login');
     }
-    return true;
+    if (req.user.role !== 'ADMIN') {
+        return res.status(403).send('Access denied. You dont have the authorized access.');
+    }
+    return next();
 }
 
-function isUser (req, res) {
-    if (!req.isAuthenticated() || req.user.role !== 'USER') {
-        res.status(403).send('Access denied. You dont have the authorized access.');
-        return false;
+function isUser (req, res, next) {
+    if (!req.isAuthenticated || !req.isAuthenticated()) {
+        return res.redirect('/login');
     }
-    return true;
+    if (req.user.role !== 'USER') {
+        return res.status(403).send('Access denied. You dont have the authorized access.');
+    }
+    return next();
 }
 
 async function updateRole (req, res, next) {
-    if (!ensureAuthenticated(req, res)) {
-        return;
-    }
-
     try {
         const userId = req.user.id;
         const { role } = req.body;

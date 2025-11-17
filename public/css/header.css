@@ -1,7 +1,9 @@
-.main-header {
+header.main-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
     padding: 1rem 3rem;
     background: linear-gradient(90deg, #b6532d, #f2b27c);
     color: white;
@@ -9,15 +11,54 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
+.badges {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
 .logo {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 600;
+}
+
+.role-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.role-form label {
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.role-form input[type="radio"] {
+    accent-color: #f2b27c;
+    cursor: pointer;
+}
+
+.role-form button {
+    padding: 6px 16px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.role-form button:hover {
+    background: rgba(255,255,255,0.35);
+    color: #b6532d;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .nav-links a {
@@ -84,36 +125,4 @@
 .profile-link:hover {
     background: #fcead9;
     color: #a14422;
-}
-
-.badges {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    justify-items: center;
-    align-content: center;
-    align-items: center;
-    gap: 15px;
-}
-
-form {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    justify-items: center;
-    align-items: center;
-    justify-content: center;
-}
-
-input[type="submit"] {
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #a144225d;
-        color: white;
-    }
 }
