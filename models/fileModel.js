@@ -1,14 +1,15 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+
 class FileModel {
   async createFile(data) {
     return await prisma.file.create({
       data: {
         filename: data.filename,
         size: data.size,
-        path: data.path,
         type: data.type,
+        url: data.url,
         userId: data.userId,
       },
     });
@@ -45,8 +46,8 @@ class FileModel {
       data: {
         ...(data.filename && { filename: data.filename }),
         ...(data.size !== undefined && data.size !== null && { size: data.size }),
-        ...(data.path && { path: data.path }),
         ...(data.type && { type: data.type }),
+        ...(data.url && { url: data.url }),
         ...(data.userId && { userId: data.userId }),
       },
     });

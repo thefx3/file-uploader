@@ -45,7 +45,8 @@ async function loginFailure(req, res) {
 }
 
 async function registerPage(req, res) {
-    res.render('register-page', { user: req.user}); 
+    const { registerError } = req.query;
+    res.render('register-page', { user: req.user, registerError }); 
 }
 
 async function registerForm(req, res, next) {
@@ -53,21 +54,28 @@ async function registerForm(req, res, next) {
         const { username, email, password  } = req.body;
 
         if (!username|| !email || !password) {
-            return res.status(400).send('All the fields are required');
+            return res.redirect('/register?registerError=missing');
         }
 
         //Check if the email is not already used
         const normalizedEmail = email.trim().toLowerCase();
+        const normalizedUsername = username.trim();
+
         const existingUser = await UserModel.getUserByEmail(normalizedEmail);
+        const existingUser2 = await UserModel.getUserByUsername(normalizedUsername);
 
         if (existingUser) {
-          return res.status(409).send('This email is already used.');
+          return res.redirect('/register?registerError=email');
+        }
+
+        if (existingUser2) {
+          return res.redirect('/register?registerError=username');
         }
 
         const hashedPassword = await genPassword(password);
 
         await UserModel.createUser({
-          username: username.trim(),
+          username: normalizedUsername,
           email: normalizedEmail,
           password: hashedPassword,
         });

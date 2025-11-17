@@ -3,6 +3,14 @@
   <div class="register-card">
     <h1>Create an account</h1>
     <p class="subtitle">and enter the community</p>
+    
+    <% if (registerError === 'missing') { %>
+      <p class="login-error">All the fields are required.</p>
+    <% } else if (registerError === 'email') { %>
+      <p class="login-error">Email already used.</p>
+    <% } else if (registerError === 'username') { %>
+      <p class="login-error">Username already used.</p>
+    <% } %>
 
     <form action="/register" method="POST" class="register-form">
       <label for="username">Username</label>
