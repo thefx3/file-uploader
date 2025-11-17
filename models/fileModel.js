@@ -6,6 +6,7 @@ class FileModel {
     return await prisma.file.create({
       data: {
         filename: data.filename,
+        size: data.size,
         path: data.path,
         type: data.type,
         userId: data.userId,
@@ -43,6 +44,7 @@ class FileModel {
       where: { id },
       data: {
         ...(data.filename && { filename: data.filename }),
+        ...(data.size !== undefined && data.size !== null && { size: data.size }),
         ...(data.path && { path: data.path }),
         ...(data.type && { type: data.type }),
         ...(data.userId && { userId: data.userId }),

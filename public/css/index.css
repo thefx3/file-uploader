@@ -140,7 +140,7 @@
 }
 
 .upload-section {
-  max-width: 600px;
+  max-width: 750px;
   margin: 1.5rem auto;
   background: #fff;
   border-radius: 16px;
@@ -162,6 +162,8 @@
   border-radius: 12px;
   background: #fff7f1;
   cursor: pointer;
+  color: #000000;
+  font-size: 1rem;
 }
 
 .upload-form button {
@@ -189,18 +191,6 @@
 .upload-list h3 {
   margin-bottom: 0.5rem;
   color: #b45a2b;
-}
-
-.upload-list ul {
-  list-style: none;
-  border-top: 1px solid #f0d5c0;
-  padding-top: 1rem;
-}
-
-.upload-list li {
-  padding: 0.35rem 0;
-  font-weight: 500;
-  color: #444;
 }
 
 .dashboard-actions {
@@ -233,8 +223,13 @@
 .upload-list table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  table-layout: fixed;
   font-size: 0.95rem;
+  border: 1px solid #f0d5c0;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 980px;
+  margin: 1rem auto 0;
 }
 
 .upload-list thead {
@@ -246,56 +241,75 @@
 
 .upload-list th,
 .upload-list td {
-  padding: 0.75rem;
+  padding: 0.65rem 0.85rem;
   border-bottom: 1px solid #f0d5c0;
   text-align: left;
+  vertical-align: middle;
 }
 
 .upload-list tbody tr:hover {
   background: #fff7f1;
 }
 
-.upload-page-btn {
-  display: flex;
-  justify-content: center;
-  align-self: center;
-  justify-self: center;
-  text-decoration: none;
-  color: #b45a2b;
-  border: 1px solid #c0392b;
-  width: 150px;
-  padding: 12px 20px;
-  border-radius: 12px;
-  transition: all 0.3 ease;
-
-  &:hover {
-    transform: scale(0.98);
-  }
+.upload-list tbody tr {
+  height: 52px;
 }
 
+.upload-list th:nth-child(1) { width: 14%; text-align:center; white-space: nowrap; }
+.upload-list th:nth-child(2) { width: 32%; }
+.upload-list th:nth-child(3) { width: 20%; }
+.upload-list th:nth-child(4) { width: 14%; }
+.upload-list th:nth-child(5) { width: 12%; }
+.upload-list th:nth-child(6) { width: 8%; text-align:center; }
 
-table {
-  margin-top: 25px;
-  border-collapse: collapse;
+/* 5th/6th columns (size/date/by) share remaining space */
+.upload-list th:nth-child(5),
+.upload-list td:nth-child(5),
+.upload-list th:nth-child(6),
+.upload-list td:nth-child(6) {
+  text-align: left;
+}
+
+.download-action,
+.delete-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
   border-radius: 10px;
-  border: 2px solid rgb(82, 79, 104);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 1.25rem;
-  letter-spacing: 1px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff8f3;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.download-action {
+  background: #4bd680;
+  box-shadow: 0 6px 14px rgba(75, 214, 128, 0.35);
+}
+
+.download-action:hover {
+  background: #34975a;
+  transform: translateY(-1px);
+}
+
+.delete-action {
+  margin-left: 6px;
+  background: #d45f4b;
+  border: none;
+  box-shadow: 0 6px 14px rgba(212, 95, 75, 0.18);
+}
+
+.delete-action:hover {
+  background: #b84633;
+  transform: translateY(-1px);
+}
+
+.action-cell-content {
+  display: flex;
+  gap: 8px;
   justify-content: center;
-  justify-items: center;
-
-  max-width: 1200px;
-}
-
-th,td {
-border: 1px solid rgba(77, 77, 77, 0.336);
-padding: 8px 10px;
-text-align: center;
-
-}
-
-th {
-  height: 4rem;
-  background-color: rgba(7, 0, 66, 0.479);
+  align-items: center;
 }

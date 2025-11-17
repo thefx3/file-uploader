@@ -8,7 +8,21 @@ const { PrismaClient } = require('@prisma/client');
 async function homePage(req, res) {
     try {
       const { loginError } = req.query;
-      const files = req.user ? await FileModel.getAllFiles():[];
+      const filesRaw = req.user ? await FileModel.getAllFiles():[];
+
+      const files = filesRaw.map(f => {
+        const kb = 1024;
+        const mb = kb * 1024;
+        const formatSize = f.size === null || f.size === undefined
+          ? '—'
+          : f.size >= mb
+            ? `${(f.size / mb).toFixed(2)} MB`
+            : f.size >= kb
+              ? `${(f.size / kb).toFixed(1)} KB`
+              : `${f.size} B`;
+        return { ...f, displaySize: formatSize };
+      });
+
       res.render("homepage", { loginError, user: req.user, files });
 
     } catch (error) {

@@ -39,6 +39,7 @@ enum Role {
 model File {
   id         Int        @id @default(autoincrement())
   filename   String
+  size       Int
   path       String
   type       String
   uploadedBy User       @relation(fields: [userId], references: [id])

@@ -17,6 +17,8 @@ router.get('/upload', accountsController.ensureAuthenticated,
 router.get('/files', accountsController.ensureAuthenticated,
                      accountsController.isUser,
                      uploadController.listFiles);
+router.get('/download/:id', accountsController.ensureAuthenticated,
+                            uploadController.downloadFile);
 
 
 
@@ -25,7 +27,8 @@ router.post('/upload', accountsController.ensureAuthenticated,
                        accountsController.isAdmin,
                        upload.single('file'),
                        uploadController.uploadForm);
-
+router.post('/delete/:id', accountsController.ensureAuthenticated,
+                           uploadController.deleteFile);
 
 
 module.exports = router;

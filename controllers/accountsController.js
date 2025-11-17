@@ -44,7 +44,7 @@ async function updateRole (req, res, next) {
         }
 
         if (normalizedRole === req.user.role) {
-            return res.redirect('back');
+            return res.redirect('/');
         }
 
         await UserModel.updateUserRole(userId, normalizedRole);

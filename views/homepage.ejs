@@ -34,17 +34,26 @@
           <table width="100%">
             <thead class="header">
               <tr>
-                <th class="file_name" width="35%">File name</th>
-                <th class="type" width="20%">Type</th>
-                <th class="added" width="25%">Added</th>
-                <th class="by" width="20%">By (user id)</th>
+                <th class="download">Action</th>
+                <th class="file_name">File name</th>
+                <th class="type">Type</th>
+                <th class="size">Size</th>
+                <th class="added">Added</th>
+                <th class="by">By</th>
               </tr>
             </thead>
             <tbody>
               <% files.forEach(file => { %>
                 <tr>
+                  <td class="action-cell-content">
+                    <a href="/download/<%= file.id %>" class="download-action" title="Download">⬇️</a>
+                    <form action="/delete/<%= file.id %>" method="POST" class="inline-action">
+                      <button type="submit" class="delete-action" onclick="return confirm('Delete file?')" title="Delete">✖</button>
+                    </form>
+                  </td>
                   <td><%= file.filename %></td>
                   <td><%= file.type %></td>
+                  <td><%= file.displaySize || '—' %></td>
                   <td>
                     <%= file.addedAt
                       ? file.addedAt.toLocaleString('fr-FR', {
