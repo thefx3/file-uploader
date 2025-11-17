@@ -238,12 +238,13 @@
   color: #b45a2b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  
 }
 
 .upload-list th,
 .upload-list td {
   padding: 0.65rem 0.85rem;
-  border-bottom: 1px solid #f0d5c0;
+  border-top: 1px solid #f0d5c0;
   text-align: left;
   vertical-align: middle;
 }
@@ -271,6 +272,11 @@
   text-align: left;
 }
 
+td.action-cell-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 .download-action,
 .delete-action {
   display: inline-flex;
@@ -283,7 +289,7 @@
   font-size: 0.95rem;
   font-weight: 600;
   color: #fff8f3;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .download-action {
@@ -306,11 +312,4 @@
 .delete-action:hover {
   background: #b84633;
   transform: translateY(-1px);
-}
-
-.action-cell-content {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
 }
