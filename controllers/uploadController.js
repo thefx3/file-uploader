@@ -20,8 +20,9 @@ async function uploadForm(req, res, next) {
             return res.status(400).send("No file uploaded.");
         }
 
+        const uniqueName = Date.now() + "-" + req.file.originalname;
         await FileModel.createFile({
-            filename: req.file.originalname,
+            filename: uniqueName,
             path: req.file.path,
             type: req.file.mimetype,
             userId: req.user.id,

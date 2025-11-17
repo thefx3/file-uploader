@@ -28,11 +28,34 @@
       <% if (files && files.length) { %>
         <section class="upload-section upload-list">
           <h3>Your uploads</h3>
-          <ul>
-            <% files.forEach(file => { %>
-              <li><strong><%= file.filename %></strong> (<%= file.type %>)</li>
-            <% }) %>
-          </ul>
+          <table width="100%">
+            <thead class="header">
+              <tr>
+                <th class="file_name" width="35%">File name</th>
+                <th class="type" width="20%">Type</th>
+                <th class="added" width="25%">Added</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% files.forEach(file => { %>
+                <tr>
+                  <td><%= file.filename %></td>
+                  <td><%= file.type %></td>
+                  <td>
+                    <%= file.addedAt
+                      ? file.addedAt.toLocaleString('fr-FR', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })
+                      : '—' %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
         </section>
       <% } %>
      
