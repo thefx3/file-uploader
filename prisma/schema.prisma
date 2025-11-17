@@ -37,10 +37,11 @@ enum Role {
 }
 
 model File {
-  id         Int    @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   filename   String
   path       String
   type       String
-  uploadedBy User   @relation(fields: [userId], references: [id])
+  uploadedBy User       @relation(fields: [userId], references: [id])
   userId     Int
+  addedAt    DateTime   @default(now())
 }

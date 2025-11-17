@@ -4,9 +4,6 @@ console.log("Environment loaded:", process.env.DB_HOST, process.env.DB_DATABASE)
 //Import of external modules
 const path = require("node:path");
 const express = require('express');
-
-
-
 const session = require('express-session');
 
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
@@ -16,10 +13,8 @@ const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
 
 //Import of local modules
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
-
 const routes = require('./routes');
+const uploadRoutes = require('./routes/uploadIndex');
 
 //Config the local strategy for passport
 require('./auth/passport');
@@ -73,6 +68,7 @@ app.use((req, res, next) => {
 
 //-------------- ROUTES ---------------------------------
 app.use(routes);
+app.use(uploadRoutes);
 
 
 

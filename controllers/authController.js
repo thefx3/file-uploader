@@ -1,5 +1,6 @@
 const { genPassword } = require('../auth/passwordUtils');
 const UserModel = require('../models/userModel');
+const FileModel = require('../models/fileModel');
 const { PrismaClient } = require('@prisma/client');
 
 // -------------- CONTROLLERS ----------------
@@ -7,7 +8,8 @@ const { PrismaClient } = require('@prisma/client');
 async function homePage(req, res) {
     try {
       const { loginError } = req.query;
-      res.render("homepage", { loginError, user: req.user });
+      const files = req.user ? await FileModel.getAllFiles():[];
+      res.render("homepage", { loginError, user: req.user, files });
 
     } catch (error) {
       console.error("Error chargin homepage:", error);

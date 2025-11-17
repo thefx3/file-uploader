@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>Upload Page</title>
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/index.css">
+  </head>
+
+  <body>
+    <%- include("partials/header") %>
+
+      <div class="welcome-banner">
+        <h2>👋 Let's upload something <%= user.username|| user.email || user.id %>!</h2>
+      </div>
+
+      <% if (uploadSuccess) { %>
+        <div class="login-error" style="background-color:#eaf8f2;color:#1b7c54;border-color:#b6dec8;">
+          ✅ File uploaded successfully.
+        </div>
+      <% } %>
+
+      <section class="upload-section">
+        <form action="/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+          <input type="file" name="file" required>
+          <button type="submit">Upload</button>
+        </form>
+      </section>
+
+      <% if (files && files.length) { %>
+        <section class="upload-section upload-list">
+          <h3>Your uploads</h3>
+          <ul>
+            <% files.forEach(file => { %>
+              <li><strong><%= file.filename %></strong> (<%= file.type %>)</li>
+            <% }) %>
+          </ul>
+        </section>
+      <% } %>
+     
+      
+  </body>
+</html>

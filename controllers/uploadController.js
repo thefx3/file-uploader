@@ -1,20 +1,49 @@
-const { genPassword } = require('../auth/passwordUtils');
 const FileModel = require('../models/fileModel');
-const { PrismaClient } = require('@prisma/client');
 
 // -------------- CONTROLLERS ----------------
 
 async function uploadPage(req, res) {
     try {
-      const { loginError } = req.query;
-      res.render("homepage", { loginError, user: req.user });
+      const { loginError, success } = req.query;
+      const files = req.user ? await FileModel.getFilesByUser(req.user.id) : [];
+      res.render("upload-page", { loginError, user: req.user, files, uploadSuccess: success === '1' });
 
     } catch (error) {
-      console.error("Error chargin homepage:", error);
+      console.error("Error chargin uploadpage:", error);
       res.status(500).send("Internal Server Error");
     }
 }
 
-module.exports = {
+async function uploadForm(req, res, next) {
+    try {
+        if (!req.file) {
+            return res.status(400).send("No file uploaded.");
+        }
 
+        await FileModel.createFile({
+            filename: req.file.originalname,
+            path: req.file.path,
+            type: req.file.mimetype,
+            userId: req.user.id,
+        });
+
+        return res.redirect('/upload?success=1');
+    } catch (error) {
+        return next(error);
+    }
+}
+
+async function listFiles(req, res, next) {
+    try {
+        const files = await FileModel.getAllFiles();
+        return res.json(files);
+    } catch (error) {
+        return next(error);
+    }
+}
+
+module.exports = {
+    uploadPage,
+    uploadForm,
+    listFiles,
 }
