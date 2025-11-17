@@ -17,7 +17,11 @@ function formatFileSize(bytes) {
 async function uploadPage(req, res) {
     try {
       const { loginError, success } = req.query;
-      const filesRaw = req.user ? await FileModel.getFilesByUser(req.user.id) : [];
+      const filesRaw = req.user
+        ? req.user.role === 'ADMIN'
+          ? await FileModel.getAllFiles()
+          : await FileModel.getFilesByUser(req.user.id)
+        : [];
       const files = filesRaw.map(f => ({ ...f, displaySize: formatFileSize(f.size) }));
       res.render("upload-page", { loginError, user: req.user, files, uploadSuccess: success === '1' });
 
@@ -115,7 +119,9 @@ async function deleteFile(req, res, next) {
 
         await FileModel.deleteFile(fileId);
 
-        return res.redirect('/upload');
+        const referer = req.headers.referer || '/';
+        const fallback = referer.includes('/upload') ? '/upload' : '/';
+        return res.redirect(fallback);
 
     } catch (error) {
         return next(error);
